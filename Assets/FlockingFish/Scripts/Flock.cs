@@ -5,35 +5,48 @@ public class Flock : MonoBehaviour
 {
     public float speed = 0.5f;
     float rotationSpeed = 4.0f;
+    float minSpeed = 0.8f;
+    float maxSpeed = 2.0f;
     Vector3 averageHeading;
     Vector3 averagePosition;
     float neighbourDistance = 3.0f;
+    public Vector3 newGoalPos;
 
-    bool turning = false;
+    public bool turning = false;
 
 	// Use this for initialization
 	void Start ()
     {
-        speed = Random.Range(0.5f, 1.0f);
+        speed = Random.Range(minSpeed, maxSpeed);
 	}
+
+    void OnTriggerEnter(Collider other)
+    {
+        Debug.Log("Hit object");
+        if(!turning)
+        {
+            newGoalPos = this.transform.position - other.gameObject.transform.position;
+        }
+        turning = true;
+    }
+
+    void OnTriggerExit()
+    {
+        turning = false;
+    }
 	
 	// Update is called once per frame
 	void Update ()
     {
-        if (Vector3.Distance(transform.position, Vector3.zero) >= GlobalFlock.tankSize)
-            turning = true;
-        else
-            turning = false;
-
         if (turning)
         {
-            Vector3 direction = Vector3.zero - transform.position;
+            Vector3 direction = newGoalPos - transform.position;
             transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(direction), rotationSpeed * Time.deltaTime);
-            speed = Random.Range(0.5f, 1.0f);
+            speed = Random.Range(minSpeed, maxSpeed);
         }
         else
         {
-            if (Random.Range(0, 5) < 1)
+            if (Random.Range(0, 10) < 1)
                 ApplyRules();
         }
 

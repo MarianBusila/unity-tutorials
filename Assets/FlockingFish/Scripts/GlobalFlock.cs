@@ -4,9 +4,9 @@ using System.Collections;
 public class GlobalFlock : MonoBehaviour
 {
     public GameObject fishPrefab;
-    public static float tankSize = 5;
+    float tankSize = 5;
 
-    static int numFish = 10;
+    static int numFish = 30;
     public static GameObject[] allFish = new GameObject[numFish];
 
     public static Vector3 goalPos = Vector3.zero;
@@ -14,6 +14,10 @@ public class GlobalFlock : MonoBehaviour
     // Use this for initialization
     void Start ()
     {
+        RenderSettings.fogColor = Camera.main.backgroundColor;
+        RenderSettings.fogDensity = 0.06f;
+        RenderSettings.fog = true;
+
         for(int i = 0; i < numFish; i++)
         {
             Vector3 pos = new Vector3(Random.Range(-tankSize, tankSize), Random.Range(-tankSize, tankSize), Random.Range(-tankSize, tankSize));
