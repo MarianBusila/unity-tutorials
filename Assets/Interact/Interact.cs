@@ -23,7 +23,7 @@ public class Interact : MonoBehaviour {
             if(Input.GetButtonDown(buttonName))
             {
                 Debug.Log("HitButton");
-                hit.collider.SendMessage("Interact");
+                hit.collider.SendMessageUpwards("Interact");
             }
             
         }
