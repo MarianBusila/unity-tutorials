@@ -3,6 +3,11 @@ using System.Collections;
 
 public class Caustics : MonoBehaviour {
 
+#if UNITY_ANDROID
+    void Start()
+    {
+    }
+#else
     private Projector projector;
     public MovieTexture mt;
 	// Use this for initialization
@@ -12,4 +17,5 @@ public class Caustics : MonoBehaviour {
         mt.loop = true;
         mt.Play();
 	}
-}
+#endif
+    }
